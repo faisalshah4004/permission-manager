@@ -13,6 +13,16 @@ use CodeFlexTech\PermissionManager\Http\Livewire\RoleManager;
 use CodeFlexTech\PermissionManager\Http\Livewire\RolePermissionManager;
 use CodeFlexTech\PermissionManager\Http\Livewire\UserRoleManager;
 
+/**
+ * Class PermissionManagerServiceProvider
+ *
+ * @package   CodeFlexTech\PermissionManager\Providers
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class PermissionManagerServiceProvider extends ServiceProvider
 {
     public function register(): void
@@ -62,9 +72,9 @@ class PermissionManagerServiceProvider extends ServiceProvider
         }
 
         // ── Register Livewire components ──────────────────
-        Livewire::component('permission-manager::permission-manager',      PermissionManager::class);
-        Livewire::component('permission-manager::role-manager',            RoleManager::class);
-        Livewire::component('permission-manager::role-permission-manager', RolePermissionManager::class);
-        Livewire::component('permission-manager::user-role-manager',       UserRoleManager::class);
+        Livewire::component('pm-permission-manager',         PermissionManager::class);
+        Livewire::component('pm-role-manager',               RoleManager::class);
+        Livewire::component('pm-role-permission-manager',    RolePermissionManager::class);
+        Livewire::component('pm-user-role-manager',          UserRoleManager::class);
     }
 }

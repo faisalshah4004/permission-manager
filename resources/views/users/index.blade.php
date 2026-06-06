@@ -29,14 +29,16 @@
         </div>
     </div>
 
-    {{-- Results --}}
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <p style="font-size:13px;color:#64748b;">
-            Showing <strong>{{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}</strong>
-            of <strong>{{ $users->total() }}</strong> users
+    {{-- Results info --}}
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <p style="font-size:13px; color:#64748b;">
+            Showing <strong>{{ $this->users()->firstItem() ?? 0 }}–{{ $this->users()->lastItem() ?? 0 }}</strong> users
         </p>
-        <div wire:loading style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748b;">
-            <div class="pm-spinner"></div> Loading...
+
+        <div wire:loading wire:target="search">
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:#64748b;">
+                <div class="pm-spinner"></div> Loading...
+            </div>
         </div>
     </div>
 
@@ -99,11 +101,13 @@
     </div>
 
     {{-- Pagination --}}
-    @if($users->hasPages())
-    <div class="pm-pagination">
-        <span class="pm-pagination-info">Page {{ $users->currentPage() }} of {{ $users->lastPage() }}</span>
-        {{ $users->links() }}
-    </div>
+    @if($this->users()->hasPages())
+        <div class="pm-pagination">
+            <span class="pm-pagination-info">Current Page: {{ $this->users()->currentPage() }}</span>
+            <div class="pm-pagination-nav">
+                {{ $this->users()->links() }}
+            </div>
+        </div>
     @endif
 
     {{-- ══ EDIT USER ROLES MODAL ══════════════════════════ --}}
@@ -164,9 +168,9 @@
                 <button type="button" wire:click="closeModal" class="pm-btn pm-btn-secondary">Cancel</button>
                 <button wire:click="save" class="pm-btn pm-btn-primary">
                     <span wire:loading.remove wire:target="save">Save Roles</span>
-                    <span wire:loading wire:target="save" style="display:flex;align-items:center;gap:6px;">
-                        <span class="pm-spinner" style="width:12px;height:12px;border-color:rgba(255,255,255,.3);border-top-color:white;"></span>
-                        Saving...
+                    <span wire:loading wire:target="save">
+                        <span style="display:flex;align-items:center;gap:6px;">
+                        <span class="pm-spinner" style="width:12px;height:12px;border-color:rgba(255,255,255,.3);border-top-color:white;"></span>Saving...</span>
                     </span>
                 </button>
             </div>

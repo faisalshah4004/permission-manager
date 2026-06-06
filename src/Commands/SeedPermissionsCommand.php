@@ -8,15 +8,39 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
+/**
+ * Class SeedPermissionsCommand
+ *
+ * @package   CodeFlexTech\PermissionManager\Commands
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class SeedPermissionsCommand extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'permission-manager:seed
                             {--guard=web : The guard name}
                             {--super-admin= : Role name to assign all permissions}
                             {--fresh : Clear all existing permissions and roles first}';
-
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Seed permissions from config or a provided list';
 
+    /**
+     * Function handle
+     *
+     * @return int
+     */
     public function handle(): int
     {
         $guard       = $this->option('guard')       ?? 'web';
@@ -65,12 +89,12 @@ class SeedPermissionsCommand extends Command
 
         $bar->finish();
         $this->info('');
-        $this->line("  ✅  Created: {$created} | Skipped (exists): {$skipped}");
+        $this->line("  ✅  Created: $created | Skipped (exists): $skipped");
 
         // ── Create super admin role ───────────────────────
         if ($superAdmin) {
             $this->info('');
-            $this->info("Creating super admin role: {$superAdmin}...");
+            $this->info("Creating super admin role: $superAdmin...");
 
             $role = Role::firstOrCreate([
                 'name'       => $superAdmin,
@@ -78,7 +102,7 @@ class SeedPermissionsCommand extends Command
             ]);
 
             $role->syncPermissions(Permission::where('guard_name', $guard)->get());
-            $this->line("  ✅  Role '{$superAdmin}' has all " . Permission::count() . " permissions");
+            $this->line("  ✅  Role '$superAdmin' has all " . Permission::count() . ' permissions');
         }
 
         // ── Clear cache ───────────────────────────────────
@@ -91,6 +115,11 @@ class SeedPermissionsCommand extends Command
         return self::SUCCESS;
     }
 
+    /**
+     * Function defaultPermissions
+     *
+     * @return string[]
+     */
     private function defaultPermissions(): array
     {
         return [

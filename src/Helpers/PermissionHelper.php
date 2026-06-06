@@ -8,6 +8,16 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
+/**
+ * Class PermissionHelper
+ *
+ * @package   CodeFlexTech\PermissionManager\Helpers
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class PermissionHelper
 {
     /**

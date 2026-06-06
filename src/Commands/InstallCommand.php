@@ -5,18 +5,44 @@ namespace CodeFlexTech\PermissionManager\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Livewire\Livewire;
 
+/**
+ * Class InstallCommand
+ *
+ * @package   CodeFlexTech\PermissionManager\Commands
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class InstallCommand extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature   = 'permission-manager:install';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Install the CodeFlexTech Permission Manager package';
 
+    /**
+     * Function handle
+     *
+     * @return int
+     */
     public function handle(): int
     {
         $this->info('');
-        $this->info('╔══════════════════════════════════════════╗');
-        $this->info('║   CodeFlexTech Permission Manager v1.0   ║');
-        $this->info('╚══════════════════════════════════════════╝');
+        $this->info('╔════════════════════════════════════════════╗');
+        $this->info('║   CodeFlexTech Permission Manager v1.0.3   ║');
+        $this->info('╚════════════════════════════════════════════╝');
         $this->info('');
 
         // ── 1. Publish config ─────────────────────────────
@@ -62,7 +88,7 @@ class InstallCommand extends Command
 
         // ── 5. Check Livewire ─────────────────────────────
         $this->step('Checking Livewire...');
-        if (class_exists(\Livewire\Livewire::class)) {
+        if (class_exists(Livewire::class)) {
             $this->line('  ✅  Livewire detected');
         } else {
             $this->error('  ✗  Livewire not found. Run: composer require livewire/livewire');
@@ -92,12 +118,22 @@ class InstallCommand extends Command
         return self::SUCCESS;
     }
 
+    /**
+     * Function step
+     *
+     * @param string $message
+     */
     private function step(string $message): void
     {
         $this->line('');
-        $this->line("  <fg=blue>→</> {$message}");
+        $this->line("  <fg=blue>→</> $message");
     }
 
+    /**
+     * Function migrationExists
+     *
+     * @return bool
+     */
     private function migrationExists(): bool
     {
         $path  = database_path('migrations');

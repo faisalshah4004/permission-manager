@@ -38,13 +38,15 @@
     </div>
 
     {{-- Results --}}
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <p style="font-size:13px;color:#64748b;">
-            Showing <strong>{{ $roles->firstItem() ?? 0 }}–{{ $roles->lastItem() ?? 0 }}</strong>
-            of <strong>{{ $roles->total() }}</strong> roles
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <p style="font-size:13px; color:#64748b;">
+            Showing <strong>{{ $roles->firstItem() ?? 0 }}–{{ $roles->lastItem() ?? 0 }}</strong> roles
         </p>
-        <div wire:loading style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748b;">
-            <div class="pm-spinner"></div> Loading...
+
+        <div wire:loading wire:target="search">
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:#64748b;">
+                <div class="pm-spinner"></div> Loading...
+            </div>
         </div>
     </div>
 
@@ -127,10 +129,12 @@
 
     {{-- Pagination --}}
     @if($roles->hasPages())
-    <div class="pm-pagination">
-        <span class="pm-pagination-info">Page {{ $roles->currentPage() }} of {{ $roles->lastPage() }}</span>
-        {{ $roles->links() }}
-    </div>
+        <div class="pm-pagination">
+            <span class="pm-pagination-info">Current Page: {{ $roles->currentPage() }}</span>
+            <div class="pm-pagination-nav">
+                {{ $roles->links() }}
+            </div>
+        </div>
     @endif
 
     {{-- ══ CREATE / EDIT MODAL ══════════════════════════ --}}
@@ -169,8 +173,10 @@
                     <button type="button" wire:click="closeModal" class="pm-btn pm-btn-secondary">Cancel</button>
                     <button type="submit" class="pm-btn pm-btn-primary">
                         <span wire:loading.remove wire:target="save">{{ $editingId ? 'Update Role' : 'Create Role' }}</span>
-                        <span wire:loading wire:target="save" style="display:flex;align-items:center;gap:6px;">
+                        <span wire:loading wire:target="save" >
+                            <span style="display:flex;align-items:center;gap:6px;">
                             <span class="pm-spinner" style="width:12px;height:12px;"></span> Saving...
+                        </span>
                         </span>
                     </button>
                 </div>

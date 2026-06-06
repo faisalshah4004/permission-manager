@@ -8,6 +8,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Class PermissionManagerTest
+ *
+ * @package   CodeFlexTech\PermissionManager\Tests\Feature
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class PermissionManagerTest extends TestCase
 {
     use RefreshDatabase;

@@ -3,12 +3,26 @@ declare(strict_types=1);
 
 namespace CodeFlexTech\PermissionManager\Http\Livewire;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\Paginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
+/**
+ * Class RoleManager
+ *
+ * @package   CodeFlexTech\PermissionManager\Http\Livewire
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class RoleManager extends Component
 {
     use WithPagination;
@@ -25,6 +39,11 @@ class RoleManager extends Component
     public string $name      = '';
     public string $guardName = 'web';
 
+    /**
+     * Function rules
+     *
+     * @return string[]
+     */
     protected function rules(): array
     {
         $unique = 'required|string|max:255|unique:roles,name';
@@ -37,6 +56,11 @@ class RoleManager extends Component
         ];
     }
 
+    /**
+     * Function messages
+     *
+     * @return string[]
+     */
     protected function messages(): array
     {
         return [
@@ -45,16 +69,24 @@ class RoleManager extends Component
         ];
     }
 
+    /**
+     * Function roles
+     *
+     * @return \Illuminate\Pagination\Paginator
+     */
     #[Computed]
-    public function roles()
+    public function roles(): Paginator
     {
         return Role::query()
             ->withCount(['permissions', 'users'])
-            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->when($this->search, fn($q) => $q->where('name', 'like', "%$this->search%"))
             ->orderBy('name')
-            ->paginate($this->perPage);
+            ->simplePaginate($this->perPage);
     }
 
+    /**
+     * Function openCreate
+     */
     public function openCreate(): void
     {
         $this->resetForm();
@@ -62,6 +94,11 @@ class RoleManager extends Component
         $this->showModal = true;
     }
 
+    /**
+     * Function openEdit
+     *
+     * @param int $id
+     */
     public function openEdit(int $id): void
     {
         $role = Role::findOrFail($id);
@@ -73,6 +110,9 @@ class RoleManager extends Component
         $this->resetValidation();
     }
 
+    /**
+     * Function save
+     */
     public function save(): void
     {
         $this->validate();
@@ -91,12 +131,17 @@ class RoleManager extends Component
             $msg = 'Role created successfully.';
         }
 
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
         $this->closeModal();
         $this->resetPage();
         session()->flash('pm_success', $msg);
     }
 
+    /**
+     * Function confirmDelete
+     *
+     * @param int $id
+     */
     public function confirmDelete(int $id): void
     {
         // Protect super admin role
@@ -109,11 +154,14 @@ class RoleManager extends Component
         $this->showConfirm = true;
     }
 
+    /**
+     * Function delete
+     */
     public function delete(): void
     {
         if ($this->deletingId) {
             Role::destroy($this->deletingId);
-            app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+            app()[PermissionRegistrar::class]->forgetCachedPermissions();
             session()->flash('pm_success', 'Role deleted successfully.');
         }
         $this->showConfirm = false;
@@ -121,9 +169,19 @@ class RoleManager extends Component
         $this->resetPage();
     }
 
+    /**
+     * Function closeModal
+     */
     public function closeModal(): void   { $this->showModal = false;   $this->resetForm(); }
+
+    /**
+     * Function closeConfirm
+     */
     public function closeConfirm(): void { $this->showConfirm = false; $this->deletingId = null; }
 
+    /**
+     * Function resetForm
+     */
     public function resetForm(): void
     {
         $this->editingId = null;
@@ -132,9 +190,17 @@ class RoleManager extends Component
         $this->resetValidation();
     }
 
+    /**
+     * Function updatedSearch
+     */
     public function updatedSearch(): void { $this->resetPage(); }
 
-    public function render()
+    /**
+     * Function render
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function render(): Factory | View
     {
         return view('permission-manager::roles.index', [
             'roles' => $this->roles,

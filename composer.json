@@ -1,6 +1,7 @@
 {
     "name": "codeflextech/permission-manager",
     "description": "A plug-and-play Roles & Permissions management UI for Laravel using spatie/laravel-permission. Drop it in any project.",
+    "version": "1.0.3",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -16,7 +17,7 @@
         {
             "name": "Faisal Shah",
             "email": "faisalshah4004@gmail.com",
-            "homepage": "https://codeflextech.com",
+            "homepage": "https://www.muhammadfaisalshah.com/",
             "role": "Developer"
         }
     ],

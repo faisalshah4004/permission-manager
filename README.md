@@ -26,7 +26,7 @@ Built by [CodeFlexTech](https://codeflextech.com).
 | Dependency | Version |
 |---|---|
 | PHP | ^8.2 |
-| Laravel | ^11.0 or ^12.0 |
+| Laravel | ^11.0 |
 | spatie/laravel-permission | ^6.0 |
 | livewire/livewire | ^3.0 |
 

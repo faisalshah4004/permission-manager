@@ -1,6 +1,4 @@
-{{-- permission-manager::roles.permissions --}}
 <div>
-
     {{-- Flash --}}
     @if(session('pm_success'))
     <div class="pm-alert pm-alert-success" x-data="{show:true}" x-show="show" x-init="setTimeout(()=>show=false,4000)">
@@ -42,9 +40,11 @@
             <button wire:click="save" class="pm-btn pm-btn-primary">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 <span wire:loading.remove wire:target="save">Save Permissions</span>
-                <span wire:loading wire:target="save" style="display:flex;align-items:center;gap:6px;">
-                    <span class="pm-spinner" style="width:12px;height:12px;border-color:rgba(255,255,255,.3);border-top-color:white;"></span>
-                    Saving...
+                <span wire:loading wire:target="save">
+                    <span  style="display:flex;align-items:center;gap:6px;">
+                        <span class="pm-spinner" style="width:12px;height:12px;border-color:rgba(255,255,255,.3);border-top-color:white;"></span>
+                        Saving...
+                    </span>
                 </span>
             </button>
         </div>
@@ -143,9 +143,11 @@
         <button wire:click="save" class="pm-btn pm-btn-primary">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             <span wire:loading.remove wire:target="save">Save Permissions</span>
-            <span wire:loading wire:target="save" style="display:flex;align-items:center;gap:6px;">
+            <span wire:loading wire:target="save">
+                <span style="display:flex;align-items:center;gap:6px;">
                 <span class="pm-spinner" style="width:12px;height:12px;border-color:rgba(255,255,255,.3);border-top-color:white;"></span>
                 Saving...
+            </span>
             </span>
         </button>
     </div>

@@ -1,4 +1,7 @@
 <?php
+declare(strict_types = 1);
+
+use App\Models\User;
 
 return [
 
@@ -43,7 +46,7 @@ return [
     |--------------------------------------------------------------------------
     | The user model used in your application.
     */
-    'user_model' => \App\Models\User::class,
+    'user_model' => User::class,
 
     /*
     |--------------------------------------------------------------------------

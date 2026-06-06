@@ -22,6 +22,13 @@ abstract class TestCase extends Orchestra
         ]);
     }
 
+    /**
+     * Function getPackageProviders
+     *
+     * @param $app
+     *
+     * @return string[]
+     */
     protected function getPackageProviders($app): array
     {
         return [
@@ -31,6 +38,11 @@ abstract class TestCase extends Orchestra
         ];
     }
 
+    /**
+     * Function getEnvironmentSetUp
+     *
+     * @param $app
+     */
     protected function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');

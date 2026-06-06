@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $pageTitle ?? 'Permission Manager' }} — Permission Manager</title>
-
-    {{-- Google Fonts --}}
+    <title>@yield('pageTitle', 'Permission Manager') — Permission Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     {{-- Package CSS --}}
-    <link rel="stylesheet" href="{{ asset('vendor/permission-manager/permission-manager.css') }}">
+    @if(file_exists(public_path('vendor/permission-manager/permission-manager.css')))
+        <link rel="stylesheet" href="{{ asset('vendor/permission-manager/permission-manager.css') }}">
+    @else
+        <style>{!! file_get_contents(__DIR__.'/../../css/permission-manager.css') !!}</style>
+    @endif
 
     @livewireStyles
 </head>
 <body class="pm-body">
 
-<div class="pm-shell" x-data="{ sidebarOpen: false }">
+@php $activeMenu = View::yieldContent('activeMenu'); @endphp
+
+<div class="pm-shell">
 
     {{-- ── Sidebar ──────────────────────────────────── --}}
-    <aside class="pm-sidebar" :class="sidebarOpen ? 'open' : ''">
+    <aside class="pm-sidebar">
 
-        {{-- Logo --}}
         <div class="pm-sidebar-logo">
             <div class="pm-sidebar-logo-icon">
                 <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
@@ -35,7 +38,6 @@
             </div>
         </div>
 
-        {{-- Navigation --}}
         <nav class="pm-nav">
             <div class="pm-nav-label">Management</div>
 
@@ -72,57 +74,46 @@
             </a>
         </nav>
 
-        {{-- Footer --}}
         <div class="pm-sidebar-footer">
             <a href="https://codeflextech.com" target="_blank">
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                </svg>
                 codeflextech/permission-manager
             </a>
         </div>
-
     </aside>
 
     {{-- ── Main ──────────────────────────────────────── --}}
     <div class="pm-main">
 
-        {{-- Topbar --}}
         <header class="pm-topbar">
-            <button @click="sidebarOpen = !sidebarOpen"
-                    style="display:none; background:none; border:none; cursor:pointer; padding:4px;"
-                    class="pm-mobile-menu-btn">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-
             <div>
-                <p style="font-size:15px; font-weight:700; color:#0f172a;">{{ $pageTitle ?? 'Permission Manager' }}</p>
+                <p style="font-size:15px; font-weight:700; color:#0f172a;">
+                    @yield('pageTitle', 'Permission Manager')
+                </p>
             </div>
-
             <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
                 <span style="font-size:12px; color:#64748b;">
                     {{ auth()->user()?->name ?? 'Guest' }}
                 </span>
                 <a href="{{ url()->previous() }}"
                    style="font-size:12px; color:#4f46e5; text-decoration:none; display:flex; align-items:center; gap:4px;">
-                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    Back to App
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back
                 </a>
             </div>
         </header>
 
-        {{-- Content --}}
         <main class="pm-content">
-            {{ $slot }}
+            @yield('content')
         </main>
 
     </div>
 </div>
 
 @livewireScripts
-
-<style>
-@media (max-width: 768px) {
-    .pm-mobile-menu-btn { display: flex !important; }
-}
-</style>
 </body>
 </html>

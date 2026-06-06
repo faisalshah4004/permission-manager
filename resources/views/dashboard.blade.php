@@ -1,4 +1,7 @@
-{{-- permission-manager::dashboard --}}
+@extends('permission-manager::layouts.app')
+@section('pageTitle', 'Dashboard')
+@section('activeMenu', 'dashboard')
+@section('content')
 
 @php
 use Spatie\Permission\Models\Role;
@@ -142,3 +145,4 @@ $groups = Permission::all()
         </table>
     </div>
 </div>
+@endsection

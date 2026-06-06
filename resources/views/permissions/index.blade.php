@@ -57,11 +57,13 @@
     {{-- Results info --}}
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
         <p style="font-size:13px; color:#64748b;">
-            Showing <strong>{{ $permissions->firstItem() ?? 0 }}–{{ $permissions->lastItem() ?? 0 }}</strong>
-            of <strong>{{ $permissions->total() }}</strong> permissions
+            Showing <strong>{{ $permissions->firstItem() ?? 0 }}–{{ $permissions->lastItem() ?? 0 }}</strong> permissions
         </p>
-        <div wire:loading style="display:flex; align-items:center; gap:8px; font-size:12px; color:#64748b;">
-            <div class="pm-spinner"></div> Loading...
+
+        <div wire:loading wire:target="search">
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:#64748b;">
+                <div class="pm-spinner"></div> Loading...
+            </div>
         </div>
     </div>
 
@@ -129,10 +131,12 @@
 
     {{-- Pagination --}}
     @if($permissions->hasPages())
-    <div class="pm-pagination">
-        <span class="pm-pagination-info">Page {{ $permissions->currentPage() }} of {{ $permissions->lastPage() }}</span>
-        {{ $permissions->links() }}
-    </div>
+        <div class="pm-pagination">
+            <span class="pm-pagination-info">Current Page: {{ $permissions->currentPage() }}</span>
+            <div class="pm-pagination-nav">
+                {{ $permissions->links() }}
+            </div>
+        </div>
     @endif
 
     {{-- ══ CREATE / EDIT MODAL ══════════════════════════ --}}
@@ -178,8 +182,10 @@
                         <span wire:loading.remove wire:target="save">
                             {{ $editingId ? 'Update' : 'Create Permission' }}
                         </span>
-                        <span wire:loading wire:target="save" style="display:flex;align-items:center;gap:6px;">
+                        <span wire:loading wire:target="save">
+                            <span style="display:flex;align-items:center;gap:6px;">
                             <span class="pm-spinner" style="width:12px;height:12px;"></span> Saving...
+                        </span>
                         </span>
                     </button>
                 </div>

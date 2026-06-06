@@ -8,8 +8,23 @@ use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Class PermissionManagerController
+ *
+ * @package   CodeFlexTech\PermissionManager\Http\Controllers
+ *
+ * @author    Faisal Shah <faisalshah4004@gmail.com>
+ *
+ * @copyright 2026 CodeFlexTech.com
+ * @version   1.0
+ */
 class PermissionManagerController extends Controller
 {
+    /**
+     * Function index
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index(): View
     {
         $stats = [
@@ -18,48 +33,49 @@ class PermissionManagerController extends Controller
             'users'       => (config('permission-manager.user_model'))::count(),
         ];
 
-        return view('permission-manager::layouts.app', [
-            'slot'       => view('permission-manager::dashboard', compact('stats')),
-            'pageTitle'  => 'Permission Manager',
-            'activeMenu' => 'dashboard',
-        ]);
+        return view('permission-manager::dashboard', compact('stats'));
     }
 
+    /**
+     * Function permissions
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function permissions(): View
     {
-        return view('permission-manager::layouts.app', [
-            'slot'       => view('permission-manager::permissions.index'),
-            'pageTitle'  => 'Permissions',
-            'activeMenu' => 'permissions',
-        ]);
+        return view('permission-manager::permissions.page');
     }
 
+    /**
+     * Function roles
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function roles(): View
     {
-        return view('permission-manager::layouts.app', [
-            'slot'       => view('permission-manager::roles.index'),
-            'pageTitle'  => 'Roles',
-            'activeMenu' => 'roles',
-        ]);
+        return view('permission-manager::roles.page');
     }
 
+    /**
+     * Function rolePermissions
+     *
+     * @param int $role
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function rolePermissions(int $role): View
     {
         $roleModel = Role::findOrFail($role);
-
-        return view('permission-manager::layouts.app', [
-            'slot'       => view('permission-manager::roles.permissions', compact('roleModel')),
-            'pageTitle'  => "Permissions — {$roleModel->name}",
-            'activeMenu' => 'roles',
-        ]);
+        return view('permission-manager::roles.permissions-page', compact('roleModel'));
     }
 
+    /**
+     * Function users
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function users(): View
     {
-        return view('permission-manager::layouts.app', [
-            'slot'       => view('permission-manager::users.index'),
-            'pageTitle'  => 'User Roles',
-            'activeMenu' => 'users',
-        ]);
+        return view('permission-manager::users.page');
     }
 }

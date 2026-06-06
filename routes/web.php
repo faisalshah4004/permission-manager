@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use CodeFlexTech\PermissionManager\Http\Controllers\PermissionManagerController;
 use Illuminate\Support\Facades\Route;
