@@ -83,4 +83,17 @@ return [
     */
     'permission_groups' => [],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Back to App URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL defines where users will be redirected when clicking the
+    | back to app action link (e.g., "Back to main URL").
+    |
+    | Default: url('/') (The application root home URL)
+    |
+    */
+    'back_to_app_url' => url('/'),
+
 ];

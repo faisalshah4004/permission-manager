@@ -97,12 +97,12 @@
                 <span style="font-size:12px; color:#64748b;">
                     {{ auth()->user()?->name ?? 'Guest' }}
                 </span>
-                <a href="{{ url()->previous() }}"
+                <a href="{{ config('back_to_app_url', url('/')) }}"
                    style="font-size:12px; color:#4f46e5; text-decoration:none; display:flex; align-items:center; gap:4px;">
                     <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Back
+                    Back to App
                 </a>
             </div>
         </header>
