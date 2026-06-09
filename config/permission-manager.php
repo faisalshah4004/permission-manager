@@ -94,6 +94,6 @@ return [
     | Default: url('/') (The application root home URL)
     |
     */
-    'back_to_app_url' => url('/'),
+    'back_to_app_url' => config('app.url'),
 
 ];
